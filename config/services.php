@@ -35,4 +35,17 @@ return [
         ],
     ],
 
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_REDIRECT'),
+    ],
+
+    'admin_whitelist' => env('ADMIN_WHITELIST', ''),
+
+    'prestashop' => [
+        'url' => env('PRESTASHOP_URL'),
+        'key' => env('PRESTASHOP_API_KEY'),
+    ],
+
 ];
