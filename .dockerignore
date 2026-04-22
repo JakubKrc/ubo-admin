@@ -1,0 +1,47 @@
+# Never copy these into the image — they contain local-only state or secrets.
+.env
+.env.local
+.env.backup
+.env.production
+
+# Already in the multi-stage build from sources on disk
+node_modules
+vendor
+
+# Local dev droppings
+/storage/logs/*
+!/storage/logs/.gitignore
+/storage/framework/cache/*
+!/storage/framework/cache/.gitignore
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+/storage/pail
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+# Not needed at runtime
+/tests
+phpunit.xml
+/.phpunit.cache
+/.phpactor.json
+/.github
+/docs
+/readme.md
+/README.md
+.git
+.gitignore
+.gitattributes
+.editorconfig
+.dockerignore
+Dockerfile
+compose.yml
+
+# IDE / OS
+.DS_Store
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed

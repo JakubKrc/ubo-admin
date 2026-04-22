@@ -1,0 +1,42 @@
+services:
+  admin-db:
+    image: postgres:18
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - admin_db_data:/var/lib/postgresql
+    networks:
+      - admin-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}"]
+      interval: 10s
+      retries: 10
+
+  admin:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: ubo-admin
+    restart: always
+    env_file: .env
+    depends_on:
+      admin-db:
+        condition: service_healthy
+    expose:
+      - "80"
+    networks:
+      - admin-network
+      - apps_net
+
+volumes:
+  admin_db_data:
+
+networks:
+  admin-network:
+  apps_net:
+    external: true
+    name: apps_net

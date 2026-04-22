@@ -1,0 +1,25 @@
+name: Deploy ubo-admin to Hetzner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ~/ubo-admin
+            git pull origin main
+            docker compose -f compose.prod.yml build --pull
+            docker compose -f compose.prod.yml up -d --force-recreate
